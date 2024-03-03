@@ -9,6 +9,7 @@ import { Stats } from '../libs/stats.module.js'
 
 // Clases de mi proyecto
 import { Caja } from './Caja.js'
+import { Cono } from './Cono.js'
 
 
 
@@ -45,6 +46,9 @@ class MyScene extends THREE.Scene {
 
 		this.caja = new Caja(this.gui);
 		this.add(this.caja);
+
+		this.cono = new Cono(this.gui);
+		this.add(this.cono);
 	}
 
 	initStats() {
