@@ -25,8 +25,8 @@ class Caja extends THREE.Object3D {
 			rotY: 0.0,
 			rotZ: 0.0,
 
-			posX: 0.0,
-			posY: 0.0,
+			posX: 1,
+			posY: 0.5,
 			posZ: 0.0,
 
 
@@ -40,8 +40,8 @@ class Caja extends THREE.Object3D {
 				this.guiControls.rotY = 0.0;
 				this.guiControls.rotZ = 0.0;
 
-				this.guiControls.posX = 0.0;
-				this.guiControls.posY = 0.0;
+				this.guiControls.posX = 1;
+				this.guiControls.posY = 0.5;
 				this.guiControls.posZ = 0.0;
 			}
 		}
@@ -68,8 +68,10 @@ class Caja extends THREE.Object3D {
 	}
 
 	createGeometry() {
-		this.caja = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), this.material);
-		this.caja.position.y = 1;
+		this.caja = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), this.material);
+
+		this.axis = new THREE.AxesHelper(0.5);
+		this.add(this.axis);
 	}
 
 	changeFlatShading() {
@@ -90,8 +92,11 @@ class Caja extends THREE.Object3D {
 
 	update() {
 		this.position.set(this.guiControls.posX, this.guiControls.posY, this.guiControls.posZ);
-		this.rotation.set(this.guiControls.rotX, this.guiControls.rotY, this.guiControls.rotZ);
-		this.scale.set(this.guiControls.sizeX, this.guiControls.sizeY, this.guiControls.sizeZ);
+		this.guiControls.rotX += 0.01;
+		this.guiControls.rotY += 0.01;
+		this.guiControls.rotZ += 0.01;
+		this.caja.rotation.set(this.guiControls.rotX, this.guiControls.rotY, this.guiControls.rotZ);
+		this.caja.scale.set(this.guiControls.sizeX, this.guiControls.sizeY, this.guiControls.sizeZ);
 	}
 }
 
