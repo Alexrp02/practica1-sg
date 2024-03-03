@@ -8,6 +8,7 @@ import { TrackballControls } from '../libs/TrackballControls.js'
 import { Stats } from '../libs/stats.module.js'
 
 // Clases de mi proyecto
+import { Caja } from './Caja.js'
 
 
 
@@ -42,12 +43,8 @@ class MyScene extends THREE.Scene {
 		this.axis = new THREE.AxesHelper(2);
 		this.add(this.axis);
 
-
-		// Por último creamos el modelo.
-		// El modelo puede incluir su parte de la interfaz gráfica de usuario. Le pasamos la referencia a 
-		// la gui y el texto bajo el que se agruparán los controles de la interfaz que añada el modelo.
-		this.model = new MyBox(this.gui, "Controles de la Caja");
-		this.add(this.model);
+		this.caja = new Caja(this.gui);
+		this.add(this.caja);
 	}
 
 	initStats() {
@@ -202,12 +199,10 @@ class MyScene extends THREE.Scene {
 		if (this.stats) this.stats.update();
 
 		// Se actualizan los elementos de la escena para cada frame
+		this.caja.update();
 
 		// Se actualiza la posición de la cámara según su controlador
 		this.cameraControl.update();
-
-		// Se actualiza el resto del modelo
-		this.model.update();
 
 		// Le decimos al renderizador "visualiza la escena que te indico usando la cámara que te estoy pasando"
 		this.renderer.render(this, this.getCamera());
