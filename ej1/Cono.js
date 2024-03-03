@@ -17,32 +17,32 @@ class Cono extends THREE.Object3D {
 
 	createGUI(gui) {
 		this.guiControls = {
-			sizeX: 0.2,
-			sizeY: 0.2,
-			sizeZ: 0.2,
+			sizeX: 1,
+			sizeY: 1,
+			sizeZ: 1,
 
 			rotX: 0.0,
 			rotY: 0.0,
 			rotZ: 0.0,
 
-			posX: -1,
+			posX: 0,
 			posY: 0.5,
-			posZ: 0.0,
+			posZ: 1,
 
 
 			// Un botón para dejarlo todo en su posición inicial Cuando se pulse se ejecutará esta función.
 			reset: () => {
-				this.guiControls.sizeX = 0.2;
-				this.guiControls.sizeY = 0.2;
-				this.guiControls.sizeZ = 0.2;
+				this.guiControls.sizeX = 1;
+				this.guiControls.sizeY = 1;
+				this.guiControls.sizeZ = 1;
 
 				this.guiControls.rotX = 0.0;
 				this.guiControls.rotY = 0.0;
 				this.guiControls.rotZ = 0.0;
 
-				this.guiControls.posX = -1;
+				this.guiControls.posX = 0;
 				this.guiControls.posY = 0.5;
-				this.guiControls.posZ = 0.0;
+				this.guiControls.posZ = 1;
 			}
 		}
 

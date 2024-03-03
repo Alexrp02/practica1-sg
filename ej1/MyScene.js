@@ -204,6 +204,7 @@ class MyScene extends THREE.Scene {
 
 		// Se actualizan los elementos de la escena para cada frame
 		this.caja.update();
+		this.cono.update();
 
 		// Se actualiza la posición de la cámara según su controlador
 		this.cameraControl.update();
