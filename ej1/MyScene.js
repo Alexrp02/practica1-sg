@@ -10,6 +10,8 @@ import { Stats } from '../libs/stats.module.js'
 // Clases de mi proyecto
 import { Caja } from './Caja.js'
 import { Cono } from './Cono.js'
+import { Cilindro } from './Cilindro.js'
+import { Esfera } from './Esfera.js'
 
 
 
@@ -49,6 +51,12 @@ class MyScene extends THREE.Scene {
 
 		this.cono = new Cono(this.gui);
 		this.add(this.cono);
+
+		this.cilindro = new Cilindro(this.gui);
+		this.add(this.cilindro);
+
+		this.esfera = new Esfera(this.gui);
+		this.add(this.esfera);
 	}
 
 	initStats() {
@@ -205,6 +213,8 @@ class MyScene extends THREE.Scene {
 		// Se actualizan los elementos de la escena para cada frame
 		this.caja.update();
 		this.cono.update();
+		this.cilindro.update();
+		this.esfera.update();
 
 		// Se actualiza la posición de la cámara según su controlador
 		this.cameraControl.update();

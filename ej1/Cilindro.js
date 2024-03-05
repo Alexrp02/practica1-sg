@@ -1,6 +1,6 @@
 import * as THREE from '../libs/three.module.js'
 
-class Cono extends THREE.Object3D {
+class Cilindro extends THREE.Object3D {
 	constructor(gui) {
 		super();
 
@@ -12,7 +12,7 @@ class Cono extends THREE.Object3D {
 
 		this.createGeometry();
 
-		this.add(this.cono);
+		this.add(this.cilindro);
 	}
 
 	createGUI(gui) {
@@ -25,19 +25,20 @@ class Cono extends THREE.Object3D {
 			rotY: 0.0,
 			rotZ: 0.0,
 
-			posX: 0,
-			posY: 0.5,
+			posX: 1,
+			posY: 0,
 			posZ: 1,
 
 			height: 0.5,
-			radius: 0.5,
+			radiusTop: 0.5,
+			radiusBottom: 0.5,
 			radialSegments: 3,
 
 
 			// Un botón para dejarlo todo en su posición inicial Cuando se pulse se ejecutará esta función.
 			reset: () => {
-				this.cono.geometry.dispose();
-				this.cono.geometry = new THREE.ConeGeometry(0.5, 0.5, 3);
+				this.cilindro.geometry.dispose();
+				this.cilindro.geometry = new THREE.CylinderGeometry(0.5, 0.5, 3);
 
 				this.guiControls.sizeX = 1;
 				this.guiControls.sizeY = 1;
@@ -52,13 +53,14 @@ class Cono extends THREE.Object3D {
 				this.guiControls.posZ = 1;
 
 				this.guiControls.height = 0.5;
-				this.guiControls.radius = 0.5;
+				this.guiControls.radiusTop = 0.5;
+				this.guiControls.radiusBottom = 0.5;
 				this.guiControls.radialSegments = 3;
 			}
 		}
 
 
-		let folder = gui.addFolder('Cono');
+		let folder = gui.addFolder('Cilindro');
 
 
 		folder.add(this.material, 'flatShading').name('Flat Shading').onChange(() => this.changeFlatShading());
@@ -74,34 +76,25 @@ class Cono extends THREE.Object3D {
 		folder.add(this.guiControls, 'posY', -5.0, 5.0, 0.1).name('Posición Y : ').listen();
 		folder.add(this.guiControls, 'posZ', -5.0, 5.0, 0.1).name('Posición Z : ').listen();
 
-		folder.add(this.guiControls, 'height', 0.1, 5.0, 0.1).name('Altura : ').onChange(this.changeHeight.bind(this)).listen();
-		folder.add(this.guiControls, 'radius', 0.1, 5.0, 0.1).name('Radio : ').onChange(this.changeRadius.bind(this)).listen();
-		folder.add(this.guiControls, 'radialSegments', 3, 36, 1).name('Segmentos : ').onChange(this.changeSegments.bind(this)).listen();
+		folder.add(this.guiControls, 'height', 0.1, 5.0, 0.1).name('Altura : ').onChange(this.changeGeometry.bind(this)).listen();
+		folder.add(this.guiControls, 'radiusTop', 0.1, 5.0, 0.1).name('Radio arriba: ').onChange(this.changeGeometry.bind(this)).listen();
+		folder.add(this.guiControls, 'radiusBottom', 0.1, 5.0, 0.1).name('Radio abajo: ').onChange(this.changeGeometry.bind(this)).listen();
+		folder.add(this.guiControls, 'radialSegments', 3, 36, 1).name('Segmentos : ').onChange(this.changeGeometry.bind(this)).listen();
 
 		folder.add(this.guiControls, 'reset').name('[ Reset ]');
 
 	}
 
 	createGeometry() {
-		this.cono = new THREE.Mesh(new THREE.ConeGeometry(0.5, 0.5, 3), this.material);
+		this.cilindro = new THREE.Mesh(new THREE.CylinderGeometry(this.guiControls.radiusTop, this.guiControls.radiusBottom, this.guiControls.height, this.guiControls.radialSegments), this.material);
 
 		this.axis = new THREE.AxesHelper(0.5);
 		this.add(this.axis);
 	}
 
-	changeHeight() {
-		this.cono.geometry.dispose();
-		this.cono.geometry = new THREE.ConeGeometry(this.guiControls.radius, this.guiControls.height, this.guiControls.radialSegments);
-	}
-
-	changeRadius() {
-		this.cono.geometry.dispose();
-		this.cono.geometry = new THREE.ConeGeometry(this.guiControls.radius, this.guiControls.height, this.guiControls.radialSegments);
-	}
-
-	changeSegments() {
-		this.cono.geometry.dispose();
-		this.cono.geometry = new THREE.ConeGeometry(this.guiControls.radius, this.guiControls.height, this.guiControls.radialSegments);
+	changeGeometry() {
+		this.cilindro.geometry.dispose();
+		this.cilindro.geometry = new THREE.CylinderGeometry(this.guiControls.radiusTop, this.guiControls.radiusBottom, this.guiControls.height, this.guiControls.radialSegments);
 	}
 
 	changeFlatShading() {
@@ -109,15 +102,15 @@ class Cono extends THREE.Object3D {
 	}
 
 	changeSize() {
-		this.cono.scale.set(this.guiControls.sizeX, this.guiControls.sizeY, this.guiControls.sizeZ);
+		this.cilindro.scale.set(this.guiControls.sizeX, this.guiControls.sizeY, this.guiControls.sizeZ);
 	}
 
 	changeRotation() {
-		this.cono.rotation.set(this.guiControls.rotX, this.guiControls.rotY, this.guiControls.rotZ);
+		this.cilindro.rotation.set(this.guiControls.rotX, this.guiControls.rotY, this.guiControls.rotZ);
 	}
 
 	changePosition() {
-		this.cono.position.set(this.guiControls.posX, this.guiControls.posY, this.guiControls.posZ);
+		this.cilindro.position.set(this.guiControls.posX, this.guiControls.posY, this.guiControls.posZ);
 	}
 
 	update() {
@@ -126,9 +119,9 @@ class Cono extends THREE.Object3D {
 		this.guiControls.rotY += 0.01;
 		this.guiControls.rotZ += 0.01;
 
-		this.cono.rotation.set(this.guiControls.rotX, this.guiControls.rotY, this.guiControls.rotZ);
-		this.cono.scale.set(this.guiControls.sizeX, this.guiControls.sizeY, this.guiControls.sizeZ);
+		this.cilindro.rotation.set(this.guiControls.rotX, this.guiControls.rotY, this.guiControls.rotZ);
+		this.cilindro.scale.set(this.guiControls.sizeX, this.guiControls.sizeY, this.guiControls.sizeZ);
 	}
 }
 
-export { Cono };
+export { Cilindro };
