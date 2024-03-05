@@ -12,6 +12,8 @@ import { Caja } from './Caja.js'
 import { Cono } from './Cono.js'
 import { Cilindro } from './Cilindro.js'
 import { Esfera } from './Esfera.js'
+import { NudoTorus } from './NudoTorus.js'
+import { Icosaedro } from './Icosaedro.js'
 
 
 
@@ -57,6 +59,12 @@ class MyScene extends THREE.Scene {
 
 		this.esfera = new Esfera(this.gui);
 		this.add(this.esfera);
+
+		this.nudoTorus = new NudoTorus(this.gui);
+		this.add(this.nudoTorus);
+
+		this.icosaedro = new Icosaedro(this.gui);
+		this.add(this.icosaedro);
 	}
 
 	initStats() {
@@ -215,6 +223,8 @@ class MyScene extends THREE.Scene {
 		this.cono.update();
 		this.cilindro.update();
 		this.esfera.update();
+		this.nudoTorus.update();
+		this.icosaedro.update();
 
 		// Se actualiza la posición de la cámara según su controlador
 		this.cameraControl.update();
