@@ -9,7 +9,7 @@ import { Stats } from '../libs/stats.module.js'
 
 // Clases de mi proyecto
 
-
+import { FiguraRevolucion } from './FiguraRevolucion.js'
 
 /// La clase fachada del modelo
 /**
@@ -41,6 +41,9 @@ class MyScene extends THREE.Scene {
 		// Todas las unidades están en metros
 		this.axis = new THREE.AxesHelper(2);
 		this.add(this.axis);
+
+		this.figurarevolucion = new FiguraRevolucion(this.gui);
+		this.add(this.figurarevolucion);
 	}
 
 	initStats() {
@@ -191,6 +194,8 @@ class MyScene extends THREE.Scene {
 	}
 
 	update() {
+
+		this.figurarevolucion.update();
 
 		if (this.stats) this.stats.update();
 
