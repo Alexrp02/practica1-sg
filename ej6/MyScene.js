@@ -46,27 +46,6 @@ class MyScene extends THREE.Scene {
 
 		this.coche = new Coche();
 		this.add(this.coche);
-
-		document.addEventListener("keypress", (event) => {
-			console.log(event.key);
-			switch (event.key) {
-				case "w":
-					this.coche.velocidad += 0.01;
-					break;
-				case "s":
-					this.coche.velocidad += -0.01;
-					break;
-				case "a":
-					this.coche.rotateY(0.1);
-					break;
-				case "d":
-					this.coche.rotateY(-0.1);
-					break;
-				case " ":
-					this.coche.velocidad = 0;
-					break;
-			}
-		})
 	}
 
 	initStats() {
