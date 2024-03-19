@@ -15,7 +15,7 @@ class Coche extends THREE.Object3D {
 				objectLoader.load('../models/porsche911/Porsche_911_GT2.obj',
 					(object) => {
 						// object.position.set(0, 0.6, 4)
-						object.scale.set(0.1, 0.1, 0.1);
+						object.scale.set(0.5, 0.5, 0.5);
 						this.add(object);
 					}, null, null)
 			}
@@ -23,7 +23,6 @@ class Coche extends THREE.Object3D {
 		setInterval(() => {
 			this.translateOnAxis(this.morro, this.velocidad);
 			this.velocidad *= 0.99;
-			console.log(this.velocidad)
 		}, 1000 / 60)
 		setInterval(() => {
 			if (this.pressedKeys["w"]) this.velocidad += 0.001;
