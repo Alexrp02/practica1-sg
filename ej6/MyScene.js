@@ -33,6 +33,8 @@ class MyScene extends THREE.Scene {
 		// Tras crear cada elemento se añadirá a la escena con   this.add(variable)
 		this.createLights();
 
+		this.createCamera();
+
 
 		// Y unos ejes. Imprescindibles para orientarnos sobre dónde están las cosas
 		// Todas las unidades están en metros
@@ -44,8 +46,15 @@ class MyScene extends THREE.Scene {
 
 		this.coche = new Coche();
 		this.add(this.coche);
-		// Tendremos una cámara con un control de movimiento con el ratón
-		this.createCamera();
+
+		this.createCocheCamera();
+
+		document.addEventListener("keydown", (event) => {
+			if (event.key === "c") {
+				this.camera = this.cocheCamera;
+				this.cameraControl = this.cocheCameraControl;
+			}
+		})
 	}
 
 	initStats() {
@@ -72,10 +81,10 @@ class MyScene extends THREE.Scene {
 		this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 50);
 		// Recuerda: Todas las unidades están en metros
 		// También se indica dónde se coloca
-		this.camera.position.set(this.coche.position.x, this.coche.position.y + 1, this.coche.position.z + 3);
+		this.camera.position.set(4, 2, 4);
 		// Y hacia dónde mira
 		var look = new THREE.Vector3(0, 0, 0);
-		this.camera.lookAt(this.coche.position);
+		this.camera.lookAt(look);
 		this.add(this.camera);
 
 		// Para el control de cámara usamos una clase que ya tiene implementado los movimientos de órbita
@@ -85,7 +94,30 @@ class MyScene extends THREE.Scene {
 		this.cameraControl.zoomSpeed = -2;
 		this.cameraControl.panSpeed = 0.5;
 		// Debe orbitar con respecto al punto de mira de la cámara
-		this.cameraControl.target = this.coche.position;
+		this.cameraControl.target = look;
+	}
+
+	createCocheCamera() {
+		// Para crear una cámara le indicamos
+		//   El ángulo del campo de visión en grados sexagesimales
+		//   La razón de aspecto ancho/alto
+		//   Los planos de recorte cercano y lejano
+		this.cocheCamera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 50);
+		// Recuerda: Todas las unidades están en metros
+		// También se indica dónde se coloca
+		this.cocheCamera.position.set(this.coche.position.x, this.coche.position.y + 1, this.coche.position.z + 2);
+		// Y hacia dónde mira
+		this.cocheCamera.lookAt(this.coche.position);
+
+		// Para el control de cámara usamos una clase que ya tiene implementado los movimientos de órbita
+		this.cocheCameraControl = new TrackballControls(this.cocheCamera, this.renderer.domElement);
+		// Se configuran las velocidades de los movimientos
+		this.cocheCameraControl.rotateSpeed = 5;
+		this.cocheCameraControl.zoomSpeed = -2;
+		this.cocheCameraControl.panSpeed = 0.5;
+		// Debe orbitar con respecto al punto de mira de la cámara
+		this.cocheCameraControl.target = this.coche.position;
+
 	}
 
 	createGUI() {
@@ -201,9 +233,9 @@ class MyScene extends THREE.Scene {
 
 		// Se actualiza la posición de la cámara según su controlador
 		this.cameraControl.update();
-		this.camera.lookAt(this.coche.position);
-		this.camera.position.set(this.coche.position.x, this.coche.position.y + 1, this.coche.position.z + 3);
 
+		this.cocheCamera.position.set(this.coche.position.x, this.coche.position.y + 1, this.coche.position.z + 2);
+		this.cocheCamera.lookAt(this.coche.position);
 
 		// Le decimos al renderizador "visualiza la escena que te indico usando la cámara que te estoy pasando"
 		this.renderer.render(this, this.getCamera());
