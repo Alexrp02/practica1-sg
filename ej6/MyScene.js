@@ -72,7 +72,7 @@ class MyScene extends THREE.Scene {
 		this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 50);
 		// Recuerda: Todas las unidades están en metros
 		// También se indica dónde se coloca
-		this.camera.position.set(4, 2, 4);
+		this.camera.position.set(this.coche.position.x, this.coche.position.y + 1, this.coche.position.z + 3);
 		// Y hacia dónde mira
 		var look = new THREE.Vector3(0, 0, 0);
 		this.camera.lookAt(this.coche.position);
@@ -85,7 +85,7 @@ class MyScene extends THREE.Scene {
 		this.cameraControl.zoomSpeed = -2;
 		this.cameraControl.panSpeed = 0.5;
 		// Debe orbitar con respecto al punto de mira de la cámara
-		this.cameraControl.target = look;
+		this.cameraControl.target = this.coche.position;
 	}
 
 	createGUI() {
@@ -202,6 +202,8 @@ class MyScene extends THREE.Scene {
 		// Se actualiza la posición de la cámara según su controlador
 		this.cameraControl.update();
 		this.camera.lookAt(this.coche.position);
+		this.camera.position.set(this.coche.position.x, this.coche.position.y + 1, this.coche.position.z + 3);
+
 
 		// Le decimos al renderizador "visualiza la escena que te indico usando la cámara que te estoy pasando"
 		this.renderer.render(this, this.getCamera());
