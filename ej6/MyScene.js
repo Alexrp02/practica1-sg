@@ -33,8 +33,6 @@ class MyScene extends THREE.Scene {
 		// Tras crear cada elemento se añadirá a la escena con   this.add(variable)
 		this.createLights();
 
-		// Tendremos una cámara con un control de movimiento con el ratón
-		this.createCamera();
 
 		// Y unos ejes. Imprescindibles para orientarnos sobre dónde están las cosas
 		// Todas las unidades están en metros
@@ -46,6 +44,8 @@ class MyScene extends THREE.Scene {
 
 		this.coche = new Coche();
 		this.add(this.coche);
+		// Tendremos una cámara con un control de movimiento con el ratón
+		this.createCamera();
 	}
 
 	initStats() {
@@ -75,7 +75,7 @@ class MyScene extends THREE.Scene {
 		this.camera.position.set(4, 2, 4);
 		// Y hacia dónde mira
 		var look = new THREE.Vector3(0, 0, 0);
-		this.camera.lookAt(look);
+		this.camera.lookAt(this.coche.position);
 		this.add(this.camera);
 
 		// Para el control de cámara usamos una clase que ya tiene implementado los movimientos de órbita
@@ -201,6 +201,7 @@ class MyScene extends THREE.Scene {
 
 		// Se actualiza la posición de la cámara según su controlador
 		this.cameraControl.update();
+		this.camera.lookAt(this.coche.position);
 
 		// Le decimos al renderizador "visualiza la escena que te indico usando la cámara que te estoy pasando"
 		this.renderer.render(this, this.getCamera());
