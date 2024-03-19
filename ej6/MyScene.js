@@ -41,11 +41,32 @@ class MyScene extends THREE.Scene {
 		this.axis = new THREE.AxesHelper(2);
 		this.add(this.axis);
 
-		this.dormitorio = new Dormitorio();
-		this.add(this.dormitorio);
+		// this.dormitorio = new Dormitorio();
+		// this.add(this.dormitorio);
 
 		this.coche = new Coche();
 		this.add(this.coche);
+
+		document.addEventListener("keypress", (event) => {
+			console.log(event.key);
+			switch (event.key) {
+				case "w":
+					this.coche.velocidad += 0.01;
+					break;
+				case "s":
+					this.coche.velocidad += -0.01;
+					break;
+				case "a":
+					this.coche.rotateY(0.1);
+					break;
+				case "d":
+					this.coche.rotateY(-0.1);
+					break;
+				case " ":
+					this.coche.velocidad = 0;
+					break;
+			}
+		})
 	}
 
 	initStats() {
