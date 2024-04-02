@@ -48,11 +48,19 @@ class MyScene extends THREE.Scene {
 		this.add(this.coche);
 
 		this.createCocheCamera();
+		this.isCocheCamera = false;
+		this.auxCamera = this.camera;
+		this.auxCameraControl = this.cameraControl;
 
 		document.addEventListener("keydown", (event) => {
-			if (event.key === "c") {
+			if (event.key === "c" && !this.isCocheCamera) {
 				this.camera = this.cocheCamera;
 				this.cameraControl = this.cocheCameraControl;
+				this.isCocheCamera = true;
+			} else if (event.key === "c" && this.isCocheCamera) {
+				this.camera = this.auxCamera;
+				this.cameraControl = this.auxCameraControl;
+				this.isCocheCamera = false;
 			}
 		})
 	}
@@ -234,8 +242,8 @@ class MyScene extends THREE.Scene {
 		// Se actualiza la posición de la cámara según su controlador
 		this.cameraControl.update();
 
-		this.cocheCamera.position.set(this.coche.position.x, this.coche.position.y + 1, this.coche.position.z + 2);
-		this.cocheCamera.lookAt(this.coche.position);
+		this.cocheCamera.position.set(this.coche.cameraPosition.x + this.coche.position.x, this.coche.cameraPosition.y + this.coche.position.y, this.coche.cameraPosition.z + this.coche.position.z);
+		this.cocheCamera.lookAt(this.coche.getAbsoluteMorroPosition());
 
 		// Le decimos al renderizador "visualiza la escena que te indico usando la cámara que te estoy pasando"
 		this.renderer.render(this, this.getCamera());

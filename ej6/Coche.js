@@ -7,6 +7,8 @@ class Coche extends THREE.Object3D {
 		super();
 		this.morro = new THREE.Vector3(0, 0, -1);
 		this.velocidad = 0;
+		this.cameraPosition = new THREE.Vector3(0, 1, 4);
+
 		let materialLoader = new MTLLoader();
 		let objectLoader = new OBJLoader();
 		materialLoader.load('../models/porsche911/911.mtl',
@@ -21,14 +23,23 @@ class Coche extends THREE.Object3D {
 			}
 		)
 		setInterval(() => {
-			this.translateOnAxis(this.morro, this.velocidad);
+			let axis = new THREE.Vector3(0, 0, -1);
+			this.translateOnAxis(axis, this.velocidad);
 			this.velocidad *= 0.99;
 		}, 1000 / 60)
 		setInterval(() => {
 			if (this.pressedKeys["w"]) this.velocidad += 0.001;
 			if (this.pressedKeys["s"]) this.velocidad -= 0.001;
-			if (this.pressedKeys["a"]) this.rotateY(0.01);
-			if (this.pressedKeys["d"]) this.rotateY(-0.01);
+			if (this.pressedKeys["a"]) {
+				this.rotateY(0.01)
+				this.morro.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.01)
+				this.cameraPosition.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.01)
+			};
+			if (this.pressedKeys["d"]) {
+				this.morro.applyAxisAngle(new THREE.Vector3(0, 1, 0), -0.01)
+				this.cameraPosition.applyAxisAngle(new THREE.Vector3(0, 1, 0), -0.01)
+				this.rotateY(-0.01)
+			};
 		}, 1000 / 120)
 
 		this.pressedKeys = {};
@@ -76,6 +87,12 @@ class Coche extends THREE.Object3D {
 					break;
 			}
 		})
+	}
+	getAbsoluteMorroPosition() {
+		let vector = new THREE.Vector3();
+		this.getWorldPosition(vector);
+		vector.add(this.morro);
+		return vector;
 	}
 }
 
