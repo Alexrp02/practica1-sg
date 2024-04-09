@@ -8,6 +8,7 @@ import { Stats } from '../libs/stats.module.js'
 
 import { Lunes } from './Lunes.js'
 import { Auriculares } from './Auriculares.js'
+import { Tuerca } from './Tuerca.js'
 
 
 /// La clase fachada del modelo
@@ -45,7 +46,10 @@ class MyScene extends THREE.Scene {
 		// this.add(this.lunes);
 
 		this.auriculares = new Auriculares()
-		this.add(this.auriculares)
+		// this.add(this.auriculares)
+
+		this.tuerca = new Tuerca()
+		this.add(this.tuerca)
 
 	}
 
