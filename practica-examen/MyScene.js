@@ -7,6 +7,7 @@ import { TrackballControls } from '../libs/TrackballControls.js'
 import { Stats } from '../libs/stats.module.js'
 
 import { Lunes } from './Lunes.js'
+import { Auriculares } from './Auriculares.js'
 
 
 /// La clase fachada del modelo
@@ -41,7 +42,10 @@ class MyScene extends THREE.Scene {
 		this.add(this.axis);
 
 		this.lunes = new Lunes();
-		this.add(this.lunes);
+		// this.add(this.lunes);
+
+		this.auriculares = new Auriculares()
+		this.add(this.auriculares)
 
 	}
 
